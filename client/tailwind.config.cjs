@@ -1,5 +1,6 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 module.exports = {
+  plugins: [require("daisyui")],
   theme: {
     fontFamily: {
       sans: ['Montserrat', 'Roboto', ...defaultTheme.fontFamily.sans],

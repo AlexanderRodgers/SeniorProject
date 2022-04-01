@@ -3,7 +3,6 @@
 	import logo from './svelte-logo.svg';
 	import { variables } from '../../variables.ts';
 
-	console.log(variables);
 </script>
 
 <header>
