@@ -1,3 +1,6 @@
 {
+	"compilerOptions": {
+		"lib": ["ES2018", "DOM.Iterable"]
+	},
 	"extends": "./.svelte-kit/tsconfig.json"
 }

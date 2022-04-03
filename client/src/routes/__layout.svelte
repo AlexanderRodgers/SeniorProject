@@ -3,6 +3,8 @@
 	import '../app.css';
 </script>
 
+<html data-theme="corporate">
+
 <Header />
 
 <main>
@@ -13,10 +15,11 @@
 	<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
 </footer>
 
+</html>
 <style global lang="postcss">
 	@tailwind base;
 	@layer base {
-		h1 {
+		/* h1 {
 			font-weight: bold;
 			line-height: 80px;
 			font-size: 58px;
@@ -76,7 +79,7 @@
 			transform: scale(0);
 			animation: ripple 600ms linear;
 			background-color: rgba(255, 255, 255, 0.7);
-		}
+		} */
 		@keyframes ripple {
 			to {
 				transform: scale(4);
