@@ -12,6 +12,7 @@
 	export let placeholder: string = '';
 	export let type: 'email' | 'password' | 'text' | 'number' = 'text';
 	export let value: string | number = '';
+	export let width: string = "max-w-sm";
 	let ref: HTMLInputElement;
 
 	onMount(() => {
@@ -21,7 +22,7 @@
 	});
 </script>
 
-<div class="form-control w-full max-w-xs">
+<div class="form-control w-full {width}">
   {#if altLabel || label}
 	<label aria-label={label ?? 'text-input'} class="label">
 		{#if label}
@@ -32,7 +33,7 @@
 		{/if}
 	</label>
   {/if}
-	<input bind:this={ref} {placeholder} bind:value class="input input-bordered w-full max-w-xs" />
+	<input bind:this={ref} {placeholder} bind:value class="input input-bordered w-full" />
   {#if altLabel2 || altLabel3}
 	<label class="label">
 		{#if altLabel2}

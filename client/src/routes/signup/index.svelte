@@ -13,7 +13,7 @@
 
 	const handleSubmit = async (e) => {
 		if (password === password2) {
-			const { user, error } = await supabase.auth.signIn({
+			const { user, error } = await supabase.auth.signUp({
 				email: email,
 				password: password
 			});
@@ -23,6 +23,7 @@
 			if (error === null) {
 				invalidCredentials = true;
 			}
+			console.log({ user, error })
 		}
 	};
 </script>
