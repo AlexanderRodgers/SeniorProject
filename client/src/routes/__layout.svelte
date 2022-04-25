@@ -1,21 +1,32 @@
 <script lang="ts">
 	import Header from '$lib/header/Header.svelte';
 	import '../app.css';
+	import { session } from '$app/stores';
+	import { auth, setAuthCookie, unsetAuthCookie } from '$lib/auth';
+
+	auth.onAuthStateChange(async (event, _session) => {
+		if (event !== 'SIGNED_OUT') {
+			await setAuthCookie(_session);
+			session.set({ user: _session.user, authenticated: !!_session.user });
+		} else {
+			session.set({ user: undefined, authenticated: false });
+			await unsetAuthCookie();
+		}
+	});
 </script>
 
 <html data-theme="corporate">
+	<Header />
 
-<Header />
+	<main>
+		<slot />
+	</main>
 
-<main>
-	<slot />
-</main>
-
-<footer>
-	<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
-</footer>
-
+	<footer>
+		<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
+	</footer>
 </html>
+
 <style global lang="postcss">
 	@tailwind base;
 	@layer base {

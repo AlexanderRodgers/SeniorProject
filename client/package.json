@@ -38,6 +38,7 @@
     "@lukeed/uuid": "^2.0.0",
     "@supabase/supabase-js": "^1.33.2",
     "cookie": "^0.4.1",
-    "daisyui": "^2.13.4"
+    "daisyui": "^2.13.4",
+    "jsonwebtoken": "^8.5.1"
   }
 }
