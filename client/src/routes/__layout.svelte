@@ -3,7 +3,6 @@
 	import '../app.css';
 	import { session } from '$app/stores';
 	import { auth, setAuthCookie, unsetAuthCookie } from '$lib/auth';
-
 	auth.onAuthStateChange(async (event, _session) => {
 		if (event !== 'SIGNED_OUT') {
 			await setAuthCookie(_session);

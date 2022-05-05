@@ -4,8 +4,6 @@ import { auth, getCookie, blankCookies } from '$lib/auth';
 import * as cookie from 'cookie';
 import jwt from 'jsonwebtoken';
 
-
-
 // export const handle: Handle = async ({ event, resolve }) => {
 // 	const cookies = cookie.parse(event.request.headers.get('cookie') || '');
 // 	event.locals.userid = cookies.userid || uuid();
@@ -73,7 +71,7 @@ export const handle = async ({ event, resolve }) => {
 		const jwtPayload = cookies.access_token ? jwt.decode(cookies.access_token) : false;
 		event.locals.authenticated = !!jwtPayload;
 		event.locals.user = { email: jwtPayload?.email };
-	}
+	}	
 
 	let response = await resolve(event);
 

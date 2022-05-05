@@ -8,6 +8,7 @@
 	let password: string;
 	let password2: string;
 	let invalidCredentials = false;
+	let errorDetails: string = '';
 
 	$: enableButton = firstName && lastName && email && password && password2;
 
@@ -17,11 +18,14 @@
 				email: email,
 				password: password
 			});
-			if (user === null) {
+			if (user !== null) {
 
 			}
-			if (error === null) {
-				invalidCredentials = true;
+			if (error !== null) {
+				if (error.status === 400) {
+					invalidCredentials = true;
+					errorDetails = error.message;	
+				}
 			}
 			console.log({ user, error })
 		}
@@ -55,6 +59,6 @@
 		<button disabled={!enableButton} type="submit" class="btn btn-primary w-full">Submit</button>
 	</div>
 	<div>
-		<p hidden={invalidCredentials}>Invalid Credentials</p>
+		<p class ="px-2" hidden={!invalidCredentials}>{errorDetails}</p>
 	</div>
 </form>

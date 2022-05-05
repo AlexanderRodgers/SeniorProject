@@ -5,6 +5,7 @@
 	let email: string;
 	let password: string;
 	let creationError = false;
+	let errorDetails: string = '';
 
 	$: enableButton = !!email && !!password;
 
@@ -13,10 +14,13 @@
 			email,
 			password
 		});
-		if (user === null) {
+		if (user !== null) {
 		}
-		if (error === null) {
-			creationError = true;
+		if (error !== null) {
+			if (error.status === 400) {
+				creationError = true;
+				errorDetails = error.message;
+			}
 		}
     console.log({ user, error });
 	};
@@ -36,7 +40,7 @@
 			<button disabled={!enableButton} type="submit" class="btn btn-primary w-full">Submit</button>
 		</div>
 		<div>
-			<p hidden={creationError}>Error Creating your account</p>
+			<p class="px-2" hidden={!creationError}>{errorDetails}</p>
 		</div>
 	</form>
 </div>

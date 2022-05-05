@@ -32,7 +32,7 @@ export const blankCookies = () => {
 
 const setServerSession = async (event, session) => {
 	console.log('Setting Server Session >>>', event, session);
-	await fetch('/api/auth.json', {
+	await fetch('/api/auth', {
 		method: 'POST',
 		headers: new Headers({ 'Content-Type': 'application/json' }),
 		credentials: 'same-origin',
