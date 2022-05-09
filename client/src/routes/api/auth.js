@@ -21,7 +21,6 @@ export async function post({ request }) {
 }
 
 export async function get({ request }) {
-	console.log(request.locals);
 	const { user, authenticated } = await request.locals;
 	// refer hooks to see how this got populated
 	return {

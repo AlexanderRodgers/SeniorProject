@@ -34,6 +34,12 @@
 
 <h1>Sign up</h1>
 
+<ul class="steps steps-horizontal lg:steps-horizontal">
+  <li class="step step-primary">Fill out details</li>
+  <li class="step">Who you are</li>
+  <li class="step">Add some details</li>
+</ul>
+
 <form on:submit|preventDefault={handleSubmit}>
 	<div class="pt-4 px-2">
 		<TextInput placeholder="Joe" label="First Name" bind:value={firstName} />
