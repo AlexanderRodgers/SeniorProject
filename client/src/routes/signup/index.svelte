@@ -1,8 +1,10 @@
 <script lang="ts">
 	import TextInput from '$lib/components/TextInput.svelte';
 	import { supabase } from '../../supabase/supabaseClient';
-	import type { User } from '../../types/User';
+	import { User } from '../../types/User';
 	import { onSubmit } from './form';
+	import { Validators } from '$lib/components/Form/Validators';
+	import { Form } from '../../types/Form';
 	import Picker from './Picker.svelte';
 
 	let firstName: string;
@@ -15,6 +17,12 @@
 	let toUserSection = false;
 	let userType: User;
 	let done = false;
+	
+	let form: Form = {
+		email: {
+			validators: [Validators.requiredInput];
+		}
+	};
 
 	$: enableButton = !!(firstName && lastName && email && password && password2);
 	$: nextSection = enableButton && password === password2;
@@ -48,44 +56,65 @@
 
 <form on:submit|preventDefault={onSubmit}>
 	<div class="pt-4 px-2">
-		<TextInput placeholder="Joe" label="First Name" bind:value={firstName} />
+		<TextInput rules={[Validators.requiredInput]} required={true} placeholder="Joe" label="First Name" bind:value={firstName} />
 	</div>
 	<div class="pt-4 px-2">
-		<TextInput placeholder="Joe" label="Last Name" bind:value={lastName} />
+		<TextInput required={true} placeholder="Joe" label="Last Name" bind:value={lastName} />
 	</div>
 	<div class="pt-4 px-2">
-		<TextInput placeholder="joesmith@gmail.com" label="Email" bind:value={email} />
-	</div>
-	<div class="pt-4 px-2">
-		<TextInput placeholder="Password" label="Password *" type="password" bind:value={password} />
+		<TextInput required={true} placeholder="joesmith@gmail.com" label="Email" bind:value={email} />
 	</div>
 	<div class="pt-4 px-2">
 		<TextInput
+			required={true}
+			placeholder="Password"
+			label="Password *"
+			type="password"
+			bind:value={password}
+		/>
+	</div>
+	<div class="pt-4 px-2">
+		<TextInput
+			required={true}
 			placeholder="Password"
 			label="Re-enter Password *"
 			type="password"
 			bind:value={password2}
 		/>
 	</div>
-
-	<div class="form-control">
-		<label class="label cursor-pointer">
-			<span class="label-text">Tenant</span>
-			<input type="radio" name="radio-6" class="radio checked:bg-red-500" checked />
-		</label>
+	<div class="px-2">
+		<h2>Are you a tenant or a landlord? *</h2>
+		<div class="form-control">
+			<label class="label cursor-pointer">
+				<span class="label-text">Tenant</span>
+				<input
+					required={true}
+					type="radio"
+					name="radioTenant"
+					class="radio checked:bg-red-500"
+					bind:group={userType}
+					value={User.Tenant}
+					checked
+				/>
+			</label>
+		</div>
+		<div class="form-control">
+			<label class="label cursor-pointer">
+				<span class="label-text">Landlord</span>
+				<input
+					type="radio"
+					name="radioLandlord"
+					class="radio checked:bg-red-500"
+					checked
+					bind:group={userType}
+					value={User.Landlord}
+				/>
+			</label>
+		</div>
 	</div>
-	<div class="form-control">
-		<label class="label cursor-pointer">
-			<span class="label-text">Landlord</span>
-			<input type="radio" name="radio-6" class="radio checked:bg-red-500" checked />
-		</label>
-	</div>
-
 	<div class="px-2">
 		<button
-			disabled={!nextSection}
 			hidden={!nextSection}
-			type="button"
 			on:click={() => {
 				toUserSection = true;
 			}}
