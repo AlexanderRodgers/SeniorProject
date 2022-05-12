@@ -17,7 +17,7 @@
 <html data-theme="corporate">
 	<Header />
 
-	<main>
+	<main class="px-2">
 		<slot />
 	</main>
 

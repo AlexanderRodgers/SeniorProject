@@ -4,7 +4,7 @@
 	import { User } from '../../types/User';
 	import { onSubmit } from './form';
 	import { Validators } from '$lib/components/Form/Validators';
-	import { Form } from '../../types/Form';
+	import type { Form } from '../../types/Form';
 	import Picker from './Picker.svelte';
 
 	let firstName: string;
@@ -20,7 +20,7 @@
 	
 	let form: Form = {
 		email: {
-			validators: [Validators.requiredInput];
+			validators: [Validators.requiredInput],
 		}
 	};
 

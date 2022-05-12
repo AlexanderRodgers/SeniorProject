@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import type { ValidatorFn } from '../components/Form/Validators';
+	import Icon from '$lib/components/Icon.svelte';
 
 	export let label: string = '';
 	export let labelUppercase = false;
@@ -16,6 +17,7 @@
 	export let width: string = 'max-w-sm';
 	export let required = false;
 	export let rules: ValidatorFn[] = null;
+	export let icon: string = '';
 	let ref: HTMLInputElement;
 
 	onMount(() => {
@@ -36,14 +38,24 @@
 			{/if}
 		</label>
 	{/if}
-	<input
-		bind:this={ref}
-		{placeholder}
-		bind:value
-		class="input input-bordered w-full"
-		{required}
-		data-validators={rules}
-	/>
+	<div class="relative w-full inline-flex flex-wrap items-stretch">
+		<span
+			class="z-10 h-full absolute align-middle text-center bg-transparent rounded text-base items-center justify-center w-8 pl-3"
+		>
+			{#if icon}
+				<Icon color="text-gray-700">{icon}</Icon>
+			{/if}
+		</span>
+		<input
+			bind:this={ref}
+			{placeholder}
+			bind:value
+			class="input input-bordered w-full"
+			{required}
+			data-validators={rules}
+		/>
+	</div>
+
 	{#if altLabel2 || altLabel3}
 		<label class="label">
 			{#if altLabel2}
