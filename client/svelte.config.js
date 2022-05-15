@@ -10,6 +10,11 @@ const config = {
 	kit: {
 		adapter: adapter(),
 
+		vite: {
+			optimizeDeps: {
+				include: ['just-throttle', 'dayjs']
+			}
+		},
 		// Override http methods in the Todo forms
 		methodOverride: {
 			allowed: ['PATCH', 'DELETE']

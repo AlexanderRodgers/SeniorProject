@@ -14,7 +14,7 @@
 	});
 </script>
 
-<html data-theme="corporate">
+<html lang="en" data-theme="corporate">
 	<Header />
 
 	<main class="px-2">
