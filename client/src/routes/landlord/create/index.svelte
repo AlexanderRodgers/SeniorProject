@@ -6,7 +6,19 @@
 	let startStore;
 	let endStore;
 
-	$: test = console.log(startStore);
+	$: test = console.log($startStore);
+
+	let start = dayjs().add(-1, 'year').toDate();
+	let end = start;
+
+	const updateBoundaries = (start) => {
+		if (!endStore) return;
+		endStore.setDay(start);
+		endStore.set({ ...$endStore, start });
+		endStore.selectDay();
+	};
+
+	$: updateBoundaries(start);
 
 	let address: string = '';
 	let city: string = '';
@@ -40,7 +52,7 @@
 	<div class="px-2 py-4">
 		<label>Specify the beginning and end of the lease</label>
 		<div id="button-group" class="pt-2 btn-group">
-			<Datepicker bind:store={startStore} let:key let:send let:receive>
+			<Datepicker bind:selected={start} bind:store={startStore} let:key let:send let:receive>
 				<button class="btn btn-active" in:receive|local={{ key }} out:send|local={{ key }}>
 					{#if $startStore?.hasChosen}
 						{dayjs($startStore.selected).format('ddd MMM D, YYYY')}
@@ -49,7 +61,7 @@
 					{/if}
 				</button>
 			</Datepicker>
-			<Datepicker bind:store={endStore} start={startStore} let:key let:send let:receive>
+			<Datepicker bind:store={endStore} bind:selected={end} let:key let:send let:receive>
 				<button class="btn" in:receive|local={{ key }} out:send|local={{ key }}>
 					{#if $endStore?.hasChosen}
 						{dayjs($endStore.selected).format('ddd MMM D, YYYY')}
