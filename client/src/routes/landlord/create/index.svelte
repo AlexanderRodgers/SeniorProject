@@ -1,12 +1,11 @@
 <script lang="ts">
 	import TextInput from '$lib/components/TextInput.svelte';
+	import Checkbox from '$lib/components/Checkbox/index.svelte';
 	import dayjs from 'dayjs';
 	import { Datepicker } from 'svelte-calendar';
 
 	let startStore;
 	let endStore;
-
-	$: test = console.log($startStore);
 
 	let start = dayjs().add(-1, 'year').toDate();
 	let end = start;
@@ -71,5 +70,9 @@
 				</button>
 			</Datepicker>
 		</div>
+	</div>
+	<div class="px-2">
+		<Checkbox formControl text="Require Background Check"/>
+		<Checkbox formControl text="Require Credit Check" />
 	</div>
 </div>
