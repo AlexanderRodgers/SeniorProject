@@ -18,6 +18,10 @@
 	export let required = false;
 	export let rules: ValidatorFn[] = null;
 	export let icon: string = '';
+	export let theme: string = 'primary';
+	export let pattern: string = null;
+	export let minLength: number = null;
+	export let maxLength: number = null;
 	let ref: HTMLInputElement;
 
 	onMount(() => {
@@ -47,10 +51,13 @@
 			{/if}
 		</span>
 		<input
+			{minLength}
+			{maxLength}
+			{pattern}
 			bind:this={ref}
 			{placeholder}
 			bind:value
-			class="input input-bordered w-full"
+			class="input input-{theme} input-bordered w-full"
 			{required}
 			data-validators={rules}
 		/>

@@ -99,5 +99,8 @@
 	}
 
 	@tailwind components;
+	.text-heading {
+		@apply font-bold leading-10 text-5xl tracking-tight text-primary;
+	}
 	@tailwind utilities;
 </style>
