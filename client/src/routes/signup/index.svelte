@@ -1,17 +1,11 @@
 <script lang="ts">
-	import { onMount } from 'svelte/internal';
 	import TextInput from '$lib/components/TextInput.svelte';
 	import { supabase } from '../../supabase/supabaseClient';
 	import { User } from '../../types/User';
 	import { onSubmit } from './form';
-	import { Validators } from '$lib/components/Form/Validators';
-	import type { Form } from '../../types/Form';
-	import Picker from './Picker.svelte';
-	import { attachRipple } from '../../utils/createRipple';
-
-	onMount(async () => {
-		landlordSelectionButton.addEventListener('click', attachRipple);
-	});
+	// onMount(async () => {
+	// 	landlordSelectionButton.addEventListener('click', attachRipple);
+	// });
 
 	let firstName: string;
 	let lastName: string;
@@ -22,9 +16,6 @@
 	let errorDetails: string = '';
 	let userType: User;
 	let done = false;
-
-	let tenantSelectionButton = null;
-	let landlordSelectionButton = null;
 
 	let currentStep = 'step step-primary';
 	let nextStep = 'step';
