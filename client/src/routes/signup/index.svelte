@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte/internal';
 	import TextInput from '$lib/components/TextInput.svelte';
 	import { supabase } from '../../supabase/supabaseClient';
 	import { User } from '../../types/User';
@@ -6,6 +7,11 @@
 	import { Validators } from '$lib/components/Form/Validators';
 	import type { Form } from '../../types/Form';
 	import Picker from './Picker.svelte';
+	import { attachRipple } from '../../utils/createRipple';
+
+	onMount(async () => {
+		landlordSelectionButton.addEventListener('click', attachRipple);
+	});
 
 	let firstName: string;
 	let lastName: string;
@@ -14,20 +20,16 @@
 	let password2: string;
 	let invalidCredentials = false;
 	let errorDetails: string = '';
-	let toUserSection = false;
 	let userType: User;
 	let done = false;
+
+	let tenantSelectionButton = null;
+	let landlordSelectionButton = null;
 
 	let currentStep = 'step step-primary';
 	let nextStep = 'step';
 
 	let step = 0;
-
-	let form: Form = {
-		email: {
-			validators: [Validators.requiredInput]
-		}
-	};
 
 	$: enableButton = !!(firstName && lastName && email && password && password2);
 	$: nextSection = enableButton && password === password2;
@@ -51,7 +53,7 @@
 	};
 </script>
 
-<h1>Sign up</h1>
+<h1 class="text-heading text-primary my-5">Sign up</h1>
 
 <ul class="steps steps-horizontal lg:steps-horizontal">
 	<li class={step >= 0 ? currentStep : nextStep}>Fill out details</li>
@@ -84,7 +86,7 @@
 				bind:value={password}
 			/>
 		</div>
-		<div class="pt-4 px-2">
+		<div class="pt-4 px-2 pb-4">
 			<TextInput
 				required={true}
 				placeholder="Password"
@@ -93,7 +95,7 @@
 				bind:value={password2}
 			/>
 		</div>
-		<div class="px-2">
+		<!-- <div class="px-2">
 			<h2>Are you a tenant or a landlord? *</h2>
 			<div class="form-control">
 				<label class="label cursor-pointer">
@@ -122,7 +124,7 @@
 					/>
 				</label>
 			</div>
-		</div>
+		</div> -->
 		<div class="px-2">
 			<button
 				type="button"
@@ -133,7 +135,13 @@
 		</div>
 	{:else if step === 1}
 		<h1 class="text-subheading text-primary py-3">Select Your Account</h1>
-		<div class="aspect-video card bg-base-100 shadow-xl">
+		<div
+			on:click={() => {
+				userType = User.Landlord;
+				step++;
+			}}
+			class="aspect-video card bg-base-100 shadow-xl mb-3 cursor"
+		>
 			<div class="relative">
 				<p class="absolute left-1/2 top-2 -translate-x-1/2 text-leading text-primary-dark">
 					Landlord
@@ -143,16 +151,28 @@
 				<figure><img src="/landlord_image.svg" alt="Landlord Image" /></figure>
 			</div>
 		</div>
-		<div class="aspect-video card bg-base-100 shadow-xl">
+		<div
+			on:click={() => {
+				userType = User.Tenant;
+				step++;
+			}}
+			class="aspect-video card bg-base-100 shadow-xl cursor-pointer"
+		>
 			<div class="relative">
 				<p class="absolute left-1/2 top-2 -translate-x-1/2 text-leading text-primary-dark">
 					Tenant
 				</p>
 			</div>
 			<div class="p-4 border-2">
-				<figure><img src="/build_home.svg" alt="Tenant searching" class="object-cover"/></figure>
+				<figure><img src="/build_home.svg" alt="Tenant searching" class="object-cover" /></figure>
 			</div>
 		</div>
+	{/if}
+	{#if userType === User.Landlord && step === 2}
+		<div>Hello!</div>
+	{/if}
+	{#if userType === User.Tenant && step === 2}
+		<div>Hello Tenant!</div>
 	{/if}
 
 	<div hidden={!done} class="px-2">
