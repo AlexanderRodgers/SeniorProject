@@ -17,10 +17,15 @@
 	let toUserSection = false;
 	let userType: User;
 	let done = false;
-	
+
+	let currentStep = 'step step-primary';
+	let nextStep = 'step';
+
+	let step = 0;
+
 	let form: Form = {
 		email: {
-			validators: [Validators.requiredInput],
+			validators: [Validators.requiredInput]
 		}
 	};
 
@@ -49,80 +54,105 @@
 <h1>Sign up</h1>
 
 <ul class="steps steps-horizontal lg:steps-horizontal">
-	<li class="step step-primary">Fill out details</li>
-	<li class="step">Who you are</li>
-	<li class="step">Add some details</li>
+	<li class={step >= 0 ? currentStep : nextStep}>Fill out details</li>
+	<li class={step >= 1 ? currentStep : nextStep}>Who you are</li>
+	<li class={step >= 2 ? currentStep : nextStep}>Add some details</li>
 </ul>
 
 <form on:submit|preventDefault={onSubmit}>
-	<div class="pt-4 px-2">
-		<TextInput rules={[Validators.requiredInput]} required={true} placeholder="Joe" label="First Name" bind:value={firstName} />
-	</div>
-	<div class="pt-4 px-2">
-		<TextInput required={true} placeholder="Joe" label="Last Name" bind:value={lastName} />
-	</div>
-	<div class="pt-4 px-2">
-		<TextInput required={true} placeholder="joesmith@gmail.com" label="Email" bind:value={email} />
-	</div>
-	<div class="pt-4 px-2">
-		<TextInput
-			required={true}
-			placeholder="Password"
-			label="Password *"
-			type="password"
-			bind:value={password}
-		/>
-	</div>
-	<div class="pt-4 px-2">
-		<TextInput
-			required={true}
-			placeholder="Password"
-			label="Re-enter Password *"
-			type="password"
-			bind:value={password2}
-		/>
-	</div>
-	<div class="px-2">
-		<h2>Are you a tenant or a landlord? *</h2>
-		<div class="form-control">
-			<label class="label cursor-pointer">
-				<span class="label-text">Tenant</span>
-				<input
-					required={true}
-					type="radio"
-					name="radioTenant"
-					class="radio checked:bg-red-500"
-					bind:group={userType}
-					value={User.Tenant}
-					checked
-				/>
-			</label>
+	{#if step === 0}
+		<div class="pt-4 px-2">
+			<TextInput required={true} placeholder="Joe" label="First Name" bind:value={firstName} />
 		</div>
-		<div class="form-control">
-			<label class="label cursor-pointer">
-				<span class="label-text">Landlord</span>
-				<input
-					type="radio"
-					name="radioLandlord"
-					class="radio checked:bg-red-500"
-					checked
-					bind:group={userType}
-					value={User.Landlord}
-				/>
-			</label>
+		<div class="pt-4 px-2">
+			<TextInput required={true} placeholder="Joe" label="Last Name" bind:value={lastName} />
 		</div>
-	</div>
-	<div class="px-2">
-		<button
-			hidden={!nextSection}
-			on:click={() => {
-				toUserSection = true;
-			}}
-			class="btn btn-primary w-full">Continue</button
-		>
-	</div>
-	{#if toUserSection}
-		<Picker />
+		<div class="pt-4 px-2">
+			<TextInput
+				required={true}
+				placeholder="joesmith@gmail.com"
+				label="Email"
+				bind:value={email}
+			/>
+		</div>
+		<div class="pt-4 px-2">
+			<TextInput
+				required={true}
+				placeholder="Password"
+				label="Password *"
+				type="password"
+				bind:value={password}
+			/>
+		</div>
+		<div class="pt-4 px-2">
+			<TextInput
+				required={true}
+				placeholder="Password"
+				label="Re-enter Password *"
+				type="password"
+				bind:value={password2}
+			/>
+		</div>
+		<div class="px-2">
+			<h2>Are you a tenant or a landlord? *</h2>
+			<div class="form-control">
+				<label class="label cursor-pointer">
+					<span class="label-text">Tenant</span>
+					<input
+						required={true}
+						type="radio"
+						name="radioTenant"
+						class="radio checked:bg-red-500"
+						bind:group={userType}
+						value={User.Tenant}
+						checked
+					/>
+				</label>
+			</div>
+			<div class="form-control">
+				<label class="label cursor-pointer">
+					<span class="label-text">Landlord</span>
+					<input
+						type="radio"
+						name="radioLandlord"
+						class="radio checked:bg-red-500"
+						checked
+						bind:group={userType}
+						value={User.Landlord}
+					/>
+				</label>
+			</div>
+		</div>
+		<div class="px-2">
+			<button
+				type="button"
+				hidden={!nextSection}
+				on:click={() => step++}
+				class="btn btn-primary w-full">Continue</button
+			>
+		</div>
+	{:else if step === 1}
+		<h1 class="text-subheading text-primary py-3">Select Your Account</h1>
+		<div class="aspect-video card bg-base-100 shadow-xl">
+			<div class="relative">
+				<p class="absolute left-1/2 top-2 -translate-x-1/2 text-leading text-primary-dark">
+					Landlord
+				</p>
+			</div>
+			<div class="p-4 border-2">
+				<figure><img src="/landlord_image.svg" alt="Landlord Image" /></figure>
+			</div>
+		</div>
+		<div class="aspect-video card bg-base-100 shadow-xl">
+			<div class="relative">
+				<p class="absolute left-1/2 top-2 -translate-x-1/2 text-leading text-primary-dark">
+					Tenant
+				</p>
+			</div>
+			<div class="p-4 border-2">
+				<figure><img src="/build_home.svg" alt="Tenant searching" class="object-cover"/></figure>
+			</div>
+		</div>
 	{/if}
 
 	<div hidden={!done} class="px-2">

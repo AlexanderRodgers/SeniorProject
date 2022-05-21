@@ -100,7 +100,16 @@
 
 	@tailwind components;
 	.text-heading {
-		@apply font-bold leading-10 text-5xl tracking-tight text-primary;
+		@apply font-bold leading-10 text-5xl tracking-tight;
+	}
+	.text-subheading {
+		@apply font-bold leading-7 text-2xl tracking-tighter; 
+	}
+	.text-leading {
+		@apply font-bold leading-5 text-xl tracking-tighter;
+	}
+	.text-paragraph {
+		@apply font-semibold leading-3 tracking-tight;
 	}
 	@tailwind utilities;
 </style>
