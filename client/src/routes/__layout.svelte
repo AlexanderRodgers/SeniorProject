@@ -83,13 +83,14 @@
 			font-size: 16px;
 			letter-spacing: .2px;
 		}
+		*/
 		.ripple {
 			position: absolute;
 			border-radius: 50%;
 			transform: scale(0);
 			animation: ripple 600ms linear;
 			background-color: rgba(255, 255, 255, 0.7);
-		} */
+		}
 		@keyframes ripple {
 			to {
 				transform: scale(4);

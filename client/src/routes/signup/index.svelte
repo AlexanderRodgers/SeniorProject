@@ -1,11 +1,16 @@
 <script lang="ts">
+	import { onMount } from 'svelte/internal';
 	import TextInput from '$lib/components/TextInput.svelte';
 	import { supabase } from '../../supabase/supabaseClient';
 	import { User } from '../../types/User';
 	import { onSubmit } from './form';
-	// onMount(async () => {
-	// 	landlordSelectionButton.addEventListener('click', attachRipple);
-	// });
+	import { attachRipple } from '../../utils/createRipple';
+	import { Datepicker } from 'svelte-calendar';
+	import dayjs from 'dayjs';
+
+	let datestore;
+
+	let landlordSelectionButton = null;
 
 	let firstName: string;
 	let lastName: string;
@@ -16,6 +21,11 @@
 	let errorDetails: string = '';
 	let userType: User;
 	let done = false;
+	let zipCode: string = '';
+
+	onMount(async () => {
+		landlordSelectionButton.addEventListener('click', attachRipple);
+	});
 
 	let currentStep = 'step step-primary';
 	let nextStep = 'step';
@@ -86,36 +96,6 @@
 				bind:value={password2}
 			/>
 		</div>
-		<!-- <div class="px-2">
-			<h2>Are you a tenant or a landlord? *</h2>
-			<div class="form-control">
-				<label class="label cursor-pointer">
-					<span class="label-text">Tenant</span>
-					<input
-						required={true}
-						type="radio"
-						name="radioTenant"
-						class="radio checked:bg-red-500"
-						bind:group={userType}
-						value={User.Tenant}
-						checked
-					/>
-				</label>
-			</div>
-			<div class="form-control">
-				<label class="label cursor-pointer">
-					<span class="label-text">Landlord</span>
-					<input
-						type="radio"
-						name="radioLandlord"
-						class="radio checked:bg-red-500"
-						checked
-						bind:group={userType}
-						value={User.Landlord}
-					/>
-				</label>
-			</div>
-		</div> -->
 		<div class="px-2">
 			<button
 				type="button"
@@ -163,10 +143,34 @@
 		<div>Hello!</div>
 	{/if}
 	{#if userType === User.Tenant && step === 2}
-		<div>Hello Tenant!</div>
+		<div class="px-2">
+			<TextInput
+				minLength={5}
+				maxLength={5}
+				pattern="[0-9]{5}"
+				placeholder="Current Zip Code"
+				label="Current Zip Code"
+				bind:value={zipCode}
+			/>
+		</div>
+		<div class="px-2">
+			<TextInput
+				type="tel"
+				label="Phone number"
+				placeholder="555-555-5555"
+				name="phone"
+				pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+			/>
+		</div>
+		<div class="px-2 py-4">
+			<label>Enter your date of Birth.</label>
+			<div class="pt-2">
+				<Datepicker bind:store={datestore} />
+			</div>
+		</div>
 	{/if}
 
-	<div hidden={!done} class="px-2">
+	<div hidden={step !== 2} class="px-2">
 		<button disabled={!done} type="submit" class="btn btn-primary w-full">Submit</button>
 	</div>
 	<div>

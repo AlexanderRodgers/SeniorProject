@@ -12,7 +12,7 @@
 	export let altLabel3: string = '';
 	export let altLabelUppercase3 = false;
 	export let placeholder: string = '';
-	export let type: 'email' | 'password' | 'text' | 'number' = 'text';
+	export let type: 'email' | 'password' | 'text' | 'number' | 'tel' = 'text';
 	export let value: string | number = '';
 	export let width: string = 'max-w-sm';
 	export let required = false;
@@ -22,6 +22,7 @@
 	export let pattern: string = null;
 	export let minLength: number = null;
 	export let maxLength: number = null;
+	export let name: string = '';
 	let ref: HTMLInputElement;
 
 	onMount(() => {
@@ -51,6 +52,7 @@
 			{/if}
 		</span>
 		<input
+			{name}
 			{minLength}
 			{maxLength}
 			{pattern}
