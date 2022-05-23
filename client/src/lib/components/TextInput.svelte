@@ -68,10 +68,10 @@
 	{#if altLabel2 || altLabel3}
 		<label class="label">
 			{#if altLabel2}
-				<span class="label-text-alt">{altLabel2 ? altLabel2.toUpperCase() : altLabel2}</span>
+				<span class="label-text-alt">{altLabelUppercase2 ? altLabel2.toUpperCase() : altLabel2}</span>
 			{/if}
 			{#if altLabel3}
-				<span class="label-text-alt">{altLabel3 ? altLabel3.toUpperCase() : altLabel3}</span>
+				<span class="label-text-alt">{altLabelUppercase3 ? altLabel3.toUpperCase() : altLabel3}</span>
 			{/if}
 		</label>
 	{/if}
