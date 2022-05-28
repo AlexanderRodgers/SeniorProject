@@ -1,6 +1,7 @@
 <script lang="ts">
 	import TextInput from '$lib/components/TextInput.svelte';
 	import { supabase } from '../../supabase/supabaseClient';
+	import { goto } from '$app/navigation';
 
 	let email: string;
 	let password: string;
@@ -15,6 +16,8 @@
 			password
 		});
 		if (user !== null) {
+			console.log(user);
+			goto('/')
 		}
 		if (error !== null) {
 			if (error.status === 400) {
@@ -26,14 +29,14 @@
 	};
 </script>
 
-<h1>Log In</h1>
+<h1 class="text-heading text-primary py-4">Log In</h1>
 
 <div class="max-w-sm">
 	<form on:submit|preventDefault={createAccount}>
 		<div class="pt-4 px-2">
 			<TextInput placeholder="yourname@gmail.com" label="Email" bind:value={email} />
 		</div>
-		<div class="pt-4 pb-2 px-2">
+		<div class="pt-4 pb-4 px-2">
 			<TextInput type="password" placeholder="Password" label="Password" bind:value={password} />
 		</div>
 		<div class="px-2">

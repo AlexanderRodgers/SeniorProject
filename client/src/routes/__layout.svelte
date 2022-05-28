@@ -17,7 +17,7 @@
 <html lang="en" data-theme="corporate">
 	<Header />
 
-	<main class="px-2">
+	<main class="px-4">
 		<slot />
 	</main>
 
@@ -110,7 +110,7 @@
 		@apply font-bold leading-5 text-xl tracking-tighter;
 	}
 	.text-paragraph {
-		@apply font-semibold leading-3 tracking-tight;
+		@apply font-semibold leading-4 tracking-tight;
 	}
 	@tailwind utilities;
 </style>

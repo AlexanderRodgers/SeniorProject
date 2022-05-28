@@ -76,11 +76,10 @@
 			email,
 			first: firstName,
 			last: lastName,
-			user: userData?.id,
+			user: userData.id,
 			dob: $datestore?.selected,
 			phone: phoneNumber
 		};
-		console.log(insertObject);
 		try {
 			phoneNumber = formatNumber(phoneNumber);
 		} catch (e) {
@@ -210,10 +209,7 @@
 {/if}
 
 <div hidden={step !== 2} class="px-2">
-	<button
-		type="button"
-		disabled={!done}
-		on:click={(e) => handleSubmit(e)}
-		class="btn btn-primary w-full">Submit</button
+	<button type="button" on:click={(e) => handleSubmit(e)} class="btn btn-primary w-full"
+		>Submit</button
 	>
 </div>

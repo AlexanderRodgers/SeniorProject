@@ -19,11 +19,13 @@
           <span class="sr-only">Open main menu</span>
           <Icon color="text-white">menu</Icon>
           <div class="flex-grow">
-            <h5 class="text-white">
+            <h5 class="text-subheading text-white">
               RentRight
             </h5>
           </div>
-          <Icon color="text-white">person</Icon>
+          <a href="/login">
+            <Icon color="text-white">person</Icon>
+          </a>
         </button>
       </div>	
 		</div>
