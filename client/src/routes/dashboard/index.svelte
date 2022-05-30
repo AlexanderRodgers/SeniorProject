@@ -1,4 +1,5 @@
 <script lang="ts" context="module">
+	import { browser } from '$app/env';
 	import { supabase } from '../../supabase/supabaseClient';
 
 	let loading = true;
@@ -12,37 +13,37 @@
 				.select()
 				.eq('user', user.id)
 				.single();
-			if (error && status !== 406)
-				return {
-					status: 302,
-					redirect: '/login'
-				};
-			if (data) {
-				return data;
-			}
+			if (error && status !== 406) throw error;
+			return { data, error };
 		} catch (error) {
-			return {
-				status: 302,
-				redirect: '/login'
-			};
+			return { data: null, error };
 		} finally {
 			loading = false;
 		}
 	}
 
 	export async function load({ params, fetch, session, stuff }) {
-		let userData;
-		try {
-			userData = await getUserData();
-		} catch (error) {
-			console.log(error);
+		if (browser) {
+			const { data, error } = await getUserData();
+			if (error) {
+				return {
+					status: 302,
+					redirect: '/login'
+				};
+			}
+			return {
+				status: 200,
+				props: {
+					data
+				}
+			};
 		}
 		return {
 			status: 200,
 			props: {
-				userData
+				data: null
 			}
-		};
+		}
 	}
 </script>
 
