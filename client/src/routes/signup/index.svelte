@@ -4,6 +4,7 @@
 	import { User } from '../../types/User';
 	import { Datepicker } from 'svelte-calendar';
 	import { phoneNumberValidation } from '../../utils/formValidation';
+	import { isNameInUse } from './form';
 
 	let datestore;
 
@@ -17,7 +18,7 @@
 	let userType: User;
 	let zipCode: string = '';
 	let phoneNumber: string = null;
-
+	let username: string = '';
 	let userData = null;
 
 	let formError: { status: number; message: string } = {
@@ -72,6 +73,7 @@
 	const handleSubmit = async (e) => {
 		const insertObject = {
 			type: userType,
+			username,
 			zip: zipCode,
 			email,
 			first: firstName,
@@ -82,11 +84,14 @@
 		};
 		try {
 			phoneNumber = formatNumber(phoneNumber);
+			if (isNameInUse(username, email)) {
+				throw new Error('Error name or password is already in use');
+			}
 		} catch (e) {
 			formError.status === 400;
 			formError.message = 'Unable to parse phone number';
 		}
-		const { data, error } = await supabase.from('User').insert([insertObject]);
+		const { data, error } = await supabase.from('user').insert([insertObject]);
 		if (data) {
 		}
 		if (error) {
@@ -118,6 +123,9 @@
 	</div>
 	<div class="pt-4 px-2">
 		<TextInput required={true} placeholder="joesmith@gmail.com" label="Email" bind:value={email} />
+	</div>
+	<div class="pt-4 px-2">
+		<TextInput required={true} placeholder="joesmith" label="Username" bind:value={username} />
 	</div>
 	<div class="pt-4 px-2">
 		<TextInput

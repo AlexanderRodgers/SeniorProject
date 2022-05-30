@@ -1,7 +1,35 @@
 import type { FormError } from '../../types/Form';
+import { supabase } from '../../supabase/supabaseClient';
+import { randomUUID } from 'crypto';
+import bcrypt from 'bcrypt';
 
 function isValidString(value: any): boolean {
   return value != null && value !== "";
+}
+
+export async function isNameInUse(username: string, email: string): boolean {
+  const user = await supabase
+    .from('user')
+    .select()
+    .or(`email.eq.${email},username.eq.${username}`)
+    .maybeSingle()
+    if (user.data) return false;
+    return true;
+}
+
+export async function createUser(userData) {
+  const salt = await bcrypt.getSalt(10);
+  const hash = await bcrypt.hash(userData.password, salt);
+  const userId = randomUUID();
+  const refreshToken = randomUUID();
+  const newUser = { ...userData, userId, refreshToken };
+  const { user, error }= await supabase.from('user').insert([
+    newUser 
+  ]);
+  if (error) {
+    return false;
+  }
+
 }
 
 function isValidEmail(value: string): boolean {
