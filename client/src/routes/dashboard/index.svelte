@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<!-- <script lang="ts" context="module">
 	import { browser } from '$app/env';
 	import { supabase } from '../../supabase/supabaseClient';
 
@@ -45,11 +45,17 @@
 			}
 		}
 	}
-</script>
+</script> -->
 
 <script lang="ts">
-	export let userData;
-	console.log(userData);
+	import LandlordDashboard from '$lib/Landlord/LandlordDashboard.svelte';
+import TenantDashboard from '$lib/Tenant/TenantDashboard.svelte';
+import { User } from '../../types/User';
+	export let userType: User = User.Tenant;
 </script>
 
-<div>Hello.</div>
+{#if userType === User.Tenant}
+<TenantDashboard/>
+{:else}
+<LandlordDashboard/>
+{/if}
