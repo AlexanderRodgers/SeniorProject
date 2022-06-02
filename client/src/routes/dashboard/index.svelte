@@ -51,7 +51,7 @@
 	import LandlordDashboard from '$lib/Landlord/LandlordDashboard.svelte';
 import TenantDashboard from '$lib/Tenant/TenantDashboard.svelte';
 import { User } from '../../types/User';
-	export let userType: User = User.Tenant;
+	export let userType: User = User.Landlord;
 </script>
 
 {#if userType === User.Tenant}

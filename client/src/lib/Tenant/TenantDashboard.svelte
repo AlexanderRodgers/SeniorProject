@@ -1,58 +1,61 @@
-  <div class="row">
-    <div class="content-info">
-      <div class="action-buttons">
-        <button id="fly-to" on:click={flyToRandomPlace}
-          >Fly to random location</button
-        >
-  
-        <button
-          id="change-zoom"
-          on:click={() => (zoom = Math.floor(Math.random() * 10))}
-          >Change Zoom Level</button
-        >
-        </div>
-
-      <div class="section-txt" id="geocoder">
-        <form>
-        <Geocoder value="(Near London)" accessToken={mapboxToken} on:result={placeChanged} on:clear={() => mapComponent.setCenter({ lng: 0, lat: 0 })} />
-        {#if place}
-          <dl>
-            <dt>Name:</dt>
-            <dd>{place.label}</dd>
-            <dt>Geolocation:</dt>
-            <dd>lat: {place.geometry.lat}, lng: {place.geometry.lng}</dd>
-          </dl>
-        {/if}
-        </form>
-      </div>
-      <div class="section-txt" id="map">
-        <div class="map-wrap">
-          <Map
-            bind:this={mapComponent}
-            accessToken={mapboxToken}
-            on:recentre={recentre}
-            on:drag={drag}
-            {center}
-            bind:zoom
-          >
-            <NavigationControl />
-            <GeolocateControl on:geolocate={e => console.log('geolocated', e.detail)} />
-            <Marker lat={marker.lat} lng={marker.lng} />
-          </Map>
-        </div>
-        {#if center}
+<div class="row">
+  <div class="content-info">
+    <div class="absolute top-11 left-5" id="geocoder">
+      <form>
+      <Geocoder value="Calle Fermín Palma, 3" accessToken={mapboxToken} on:result={placeChanged} on:clear={() => mapComponent.setCenter({ lng: 0, lat: 0 })} />
+      {#if place}
+        <dl>
+          <dt>Name:</dt>
+          <dd>{place.label}</dd>
           <dt>Geolocation:</dt>
-          <dd>lat: {center.lat}, lng: {center.lng}</dd>
-          <dd>zoom: {zoom}</dd>
-        {/if}
+          <dd>lat: {place.geometry.lat}, lng: {place.geometry.lng}</dd>
+        </dl>
+      {/if}
+      </form>
+    </div>
+    <div class="section-txt" id="map">
+      <div class="map-wrap">
+        <Map
+          bind:this={mapComponent}
+          accessToken={mapboxToken}
+          on:recentre={recentre}
+          {center}
+          bind:zoom
+        >
+          <NavigationControl />
+          <GeolocateControl on:geolocate={e => console.log('geolocated', e.detail)} />
+          <Marker color="#0077BD" lat={marker.lat} lng={marker.lng}>
+            <div class="card w-64 bg-base-100 shadow-xl" slot="popup">
+              <figure><img src="/property_photo.jpg" alt="Shoes" /></figure>
+              <div class="card-body">
+                <h2 class="card-title">870 Islay St.</h2>
+                <p>4 Bedrooms</p>
+                <p>$4,200/mo.</p>
+                <p>Background Check Required</p>
+                <p>Credit Check Required</p>
+                <div class="card-actions justify-end">
+                  <button class="btn btn-primary">View Property</button>
+                </div>
+              </div>
+            </div>
+          </Marker>
+        </Map>
       </div>
     </div>
   </div>
+</div>
 
 <style>
+
+  :global(.mapboxgl-popup-content) {
+    display: inline-table;
+  }
   .map-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 60vh;
+    height: 100vh;
   }
 
   .action-buttons {
@@ -85,9 +88,9 @@
   const { GeolocateControl, NavigationControl } = controls
   const place = null
 
-  let page = 'about'
-  let center = { lat: 53.3358627, lng: -2.8572362 }
-  let marker = center
+  let center = { lng: -3.787621, lat: 37.774632 }
+  let marker = { lat: 35.27658, lng: -120.658935 };
+
   let zoom = 11.15
   let mapComponent
 
@@ -96,6 +99,7 @@
   }
 
   function placeChanged (e) {
+    console.log(e);
     const { result } = e.detail
     mapComponent.setCenter(result.center, 14)
   }
@@ -122,7 +126,7 @@
     center = detail.center
   }
 
-  function drag ({ detail }) {
-    marker = detail.center
-  }
+  // function drag ({ detail }) {
+  //   marker = detail.center
+  // }
 </script>
