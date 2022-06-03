@@ -8,7 +8,7 @@
 {#if formControl}
 	<div class="">
 		<label class="label justify-start cursor-pointer">
-			<input type="checkbox" {checked} class="checkbox checkbox-{theme}" />
+			<input type="checkbox" {checked} class="checkbox checkbox-primary" />
 			<span class="label-text ml-4">{text}</span>
 		</label>
 	</div>

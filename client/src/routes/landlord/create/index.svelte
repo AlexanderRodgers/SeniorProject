@@ -4,6 +4,68 @@
 	import dayjs from 'dayjs';
 	import { Datepicker } from 'svelte-calendar';
 
+	let states = [
+		'Alabama',
+		'Alaska',
+		'American Samoa',
+		'Arizona',
+		'Arkansas',
+		'California',
+		'Colorado',
+		'Connecticut',
+		'Delaware',
+		'District of Columbia',
+		'Federated States of Micronesia',
+		'Florida',
+		'Georgia',
+		'Guam',
+		'Hawaii',
+		'Idaho',
+		'Illinois',
+		'Indiana',
+		'Iowa',
+		'Kansas',
+		'Kentucky',
+		'Louisiana',
+		'Maine',
+		'Marshall Islands',
+		'Maryland',
+		'Massachusetts',
+		'Michigan',
+		'Minnesota',
+		'Mississippi',
+		'Missouri',
+		'Montana',
+		'Nebraska',
+		'Nevada',
+		'New Hampshire',
+		'New Jersey',
+		'New Mexico',
+		'New York',
+		'North Carolina',
+		'North Dakota',
+		'Northern Mariana Islands',
+		'Ohio',
+		'Oklahoma',
+		'Oregon',
+		'Palau',
+		'Pennsylvania',
+		'Puerto Rico',
+		'Rhode Island',
+		'South Carolina',
+		'South Dakota',
+		'Tennessee',
+		'Texas',
+		'Utah',
+		'Vermont',
+		'Virgin Island',
+		'Virginia',
+		'Washington',
+		'West Virginia',
+		'Wisconsin',
+		'Wyoming'
+	];
+
 	let startStore;
 	let endStore;
 
@@ -20,6 +82,7 @@
 	$: updateBoundaries(start);
 
 	let maxTenantsArr = Array.from({ length: 8 }, (_, i) => i + 1);
+	let state = '';
 
 	let address: string = '';
 	let city: string = '';
@@ -29,22 +92,33 @@
 	let backgroundCheck = false;
 	let creditCheck = false;
 
-	const onSubmit = () => {
-			
-	};
+	const onSubmit = () => {};
 </script>
 
-<h1 class="py-8 text-heading">Create a Listing</h1>
+<h1 class="py-8 text-heading text-primary-dark">Create a Listing</h1>
 
 <div class="px-2" />
 
 <form on:submit|preventDefault={onSubmit}>
-	<div class="px-2">
+	<div>
 		<div class="px-2">
 			<TextInput required={true} placeholder="Address" label="Property Address" />
 		</div>
 		<div class="px-2">
 			<TextInput required={true} placeholder="City" label="City" />
+		</div>
+		<div class="px-2">
+			<label>Select your state</label>
+			<select
+				bind:value={states}
+				on:change={(val) => val}
+				class="select select-primary w-full"
+			>
+				<option selected>California</option>
+				{#each states as val}
+					<option value={val}>{val}</option>
+				{/each}
+			</select>
 		</div>
 		<div class="px-2">
 			<TextInput
@@ -62,9 +136,9 @@
 		<div class="px-2">
 			<label>Select the maximum number of Tenants allowed</label>
 			<select
-				bind:value={maxTenants}
+				bind:value={state}
 				on:change={() => {}}
-				class="select select-primary w-full max-w-xs"
+				class="select select-primary w-full"
 			>
 				<option disabled selected>Maximum Number of Tenants</option>
 				{#each maxTenantsArr as val}
@@ -104,7 +178,7 @@
 			<Checkbox checked={creditCheck} formControl text="Require Credit Check" />
 		</div>
 		<div class="px-2">
-			<button class="btn btn-primary w-full" type="submit">Submit</button>
+			<button class="btn btn-primary w-full" type="submit">Continue</button>
 		</div>
 	</div>
 </form>
